@@ -1,8 +1,9 @@
-package com.example.backmedidas.service.impl;
+package com.example.backpruebas.service.impl;
 
-import com.example.backmedidas.entity.Medida;
-import com.example.backmedidas.repository.MedidaRepository;
-import com.example.backmedidas.service.MedidaService;
+import com.example.backpruebas.entity.Medida;
+import com.example.backpruebas.repository.MedidaRepository;
+import com.example.backpruebas.service.MedidaService;
+import com.example.backpruebas.service.MedidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +38,11 @@ public class MedidaServiceImpl implements MedidaService {
             return null;
         }
         //Actualizamos los valores del medida:
-        medidaDB.setFecregistro(medida.getFecregistro());
+        //medidaDB.setFecregistro(medida.getFecregistro());
+        medidaDB.setNombre(medida.getNombre());
         medidaDB.setDescripcion(medida.getDescripcion());
-        medidaDB.setEstado(medida.getEstado());
-        medidaDB.setTipo(medida.getTipo());
+        //medidaDB.setEstado(medida.getEstado());
+        //medidaDB.setTipo(medida.getTipo());
         return medidaRepository.save(medida);
     }
 
@@ -57,15 +59,4 @@ public class MedidaServiceImpl implements MedidaService {
         }
         return "ELIMINADO CON EXITO";
     }
-/*
-    @Override
-    public Medida getByDni(Long dni) {
-        return medidaRepository.findAllByTipoAndEstado("DNI", dni.toString());
-    }
-
-    @Override
-    public Medida getByDocExtranjeria(Long estado) {
-        return medidaRepository.findAllByTipoAndEstado("DOCUMENTO EXTRANJERIA", estado.toString());
-    }
- */
 }

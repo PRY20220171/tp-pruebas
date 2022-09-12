@@ -1,11 +1,11 @@
-package com.example.backmedidas.controller;
+package com.example.backpruebas.controller;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
-import com.example.backmedidas.entity.Medida;
-import com.example.backmedidas.service.MedidaService;
-import com.example.backmedidas.service.ProducerService;
-import com.example.backmedidas.util.ErrorMessage;
-import com.example.backmedidas.util.Message;
+import com.example.backpruebas.entity.Medida;
+import com.example.backpruebas.service.MedidaService;
+import com.example.backpruebas.service.ProducerService;
+import com.example.backpruebas.util.ErrorMessage;
+import com.example.backpruebas.util.Message;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -77,6 +77,7 @@ public class MedidaController {
         }
         return ResponseEntity.ok(medidaDelete);
     }
+    /*
 
     @Autowired
     ProducerService rabbitMQSender;
@@ -86,6 +87,7 @@ public class MedidaController {
         rabbitMQSender.sendMsg(new Medida());
         return "Message sent to the RabbitMQ JavaInUse Successfully";
     }
+    */
 
 
 

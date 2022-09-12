@@ -1,6 +1,7 @@
 package com.example.backpruebas.controller;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
+import com.example.backpruebas.entity.CategoriaPrueba;
 import com.example.backpruebas.entity.Prueba;
 import com.example.backpruebas.service.PruebaService;
 import com.example.backpruebas.service.ProducerService;
@@ -80,11 +81,13 @@ public class PruebaController {
 
     @Autowired
     ProducerService rabbitMQSender;
-
-    @GetMapping(value = "/test")
-    public String producer() {
-        rabbitMQSender.sendMsg(new Prueba());
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
+    @GetMapping(value = "/test/{id}")
+    public ResponseEntity<Prueba> producer(@PathVariable("id") String id) {
+        Prueba obj = (Prueba) rabbitMQSender.sendMsg(id);
+        if(obj==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(obj);
     }
 
 

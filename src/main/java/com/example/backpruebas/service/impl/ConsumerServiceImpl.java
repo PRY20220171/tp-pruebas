@@ -28,19 +28,29 @@ public class ConsumerServiceImpl implements ConsumerService {
                     exchange = @Exchange(value = "${spring.rabbitmq.exchange}"),
                     key = "${spring.rabbitmq.routingkey}")
     )
-    public Object consumerMessage(UUID proId) throws AmqpIOException {
+    public Object consumerMessage(String objId) throws AmqpIOException {
         System.out.println("=============== Message ==================");
-        System.out.println(proId);
+        System.out.println(objId);
         System.out.println("==========================================");
-        Prueba product= pruebaService.getPrueba(proId);
-        if(product==null){
+        UUID pruebaId;
+        try{
+            pruebaId= UUID.fromString(objId);
+        } catch (Exception e) {
+            ObjectMapper obj = new ObjectMapper();
+            try {
+                return obj.writeValueAsString("Error: El id de la prueba no es un UUID válido");
+            }catch(JsonProcessingException ex){
+                return null;
+            }
+        }
+        Prueba objinst= pruebaService.getPrueba(pruebaId);
+        if(objinst==null){
             return null;
         }
         else{
             ObjectMapper obj = new ObjectMapper();
             try {
-                String pro = obj.writeValueAsString(product);
-                return pro;
+                return obj.writeValueAsString(objinst);
             }catch(JsonProcessingException e){
                 return null;
             }

@@ -1,11 +1,11 @@
-package com.example.backcategoriapruebas.controller;
+package com.example.backpruebas.controller;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
-import com.example.backcategoriapruebas.entity.CategoriaPrueba;
-import com.example.backcategoriapruebas.service.CategoriaPruebaService;
-import com.example.backcategoriapruebas.service.ProducerService;
-import com.example.backcategoriapruebas.util.ErrorMessage;
-import com.example.backcategoriapruebas.util.Message;
+import com.example.backpruebas.entity.CategoriaPrueba;
+import com.example.backpruebas.service.CategoriaPruebaService;
+import com.example.backpruebas.service.ProducerService;
+import com.example.backpruebas.util.ErrorMessage;
+import com.example.backpruebas.util.Message;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -30,7 +30,7 @@ public class CategoriaPruebaController {
 
     @ApiOperation(value="Obtener un producto por su ID", notes="Provee un mecanismo para obtener todos los datos de la categoria de la prueba del paciente por su ID")
     @ApiResponses(value= {
-            @ApiResponse(code=200, message="OK", response=CategoriaPrueba.class),
+            @ApiResponse(code=200, message="OK", response= CategoriaPrueba.class),
             @ApiResponse(code=404, message="Not Found", response= ErrorMessage.class),
             @ApiResponse(code=500, message="Internal Server Error", response=ErrorMessage.class)
     })
@@ -77,16 +77,18 @@ public class CategoriaPruebaController {
         }
         return ResponseEntity.ok(categoriapruebaDelete);
     }
-
+/*
     @Autowired
     ProducerService rabbitMQSender;
-
-    @GetMapping(value = "/test")
-    public String producer() {
-        rabbitMQSender.sendMsg(new CategoriaPrueba());
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
+    @GetMapping(value = "/test/{id}")
+    public ResponseEntity<CategoriaPrueba> producer(@PathVariable("id") String id) {
+        CategoriaPrueba paciente = rabbitMQSender.sendMsg(id);
+        if(paciente==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(paciente);
     }
-
+*/
 
 
 }

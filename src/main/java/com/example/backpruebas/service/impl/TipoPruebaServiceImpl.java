@@ -1,8 +1,8 @@
-package com.example.backtipoPruebas.service.impl;
+package com.example.backpruebas.service.impl;
 
-import com.example.backtipoPruebas.entity.TipoPrueba;
-import com.example.backtipoPruebas.repository.TipoPruebaRepository;
-import com.example.backtipoPruebas.service.TipoPruebaService;
+import com.example.backpruebas.entity.TipoPrueba;
+import com.example.backpruebas.repository.TipoPruebaRepository;
+import com.example.backpruebas.service.TipoPruebaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +37,11 @@ public class TipoPruebaServiceImpl implements TipoPruebaService {
             return null;
         }
         //Actualizamos los valores del tipoPrueba:
-        tipoPruebaDB.setFecregistro(tipoPrueba.getFecregistro());
+        //tipoPruebaDB.setFecregistro(tipoPrueba.getFecregistro());
+        tipoPruebaDB.setNombre(tipoPrueba.getNombre());
         tipoPruebaDB.setDescripcion(tipoPrueba.getDescripcion());
-        tipoPruebaDB.setEstado(tipoPrueba.getEstado());
-        tipoPruebaDB.setTipo(tipoPrueba.getTipo());
+        //tipoPruebaDB.setEstado(tipoPrueba.getEstado());
+        //tipoPruebaDB.setTipo(tipoPrueba.getTipo());
         return tipoPruebaRepository.save(tipoPrueba);
     }
 

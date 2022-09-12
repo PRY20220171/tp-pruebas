@@ -37,10 +37,8 @@ public class CategoriaPruebaServiceImpl implements CategoriaPruebaService {
             return null;
         }
         //Actualizamos los valores del categoriaPrueba:
-        categoriaPruebaDB.setFecregistro(categoriaPrueba.getFecregistro());
+        categoriaPruebaDB.setNombre(categoriaPrueba.getNombre());
         categoriaPruebaDB.setDescripcion(categoriaPrueba.getDescripcion());
-        categoriaPruebaDB.setEstado(categoriaPrueba.getEstado());
-        categoriaPruebaDB.setTipo(categoriaPrueba.getTipo());
         return categoriaPruebaRepository.save(categoriaPrueba);
     }
 

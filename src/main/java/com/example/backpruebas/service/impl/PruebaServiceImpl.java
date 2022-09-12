@@ -37,10 +37,12 @@ public class PruebaServiceImpl implements PruebaService {
             return null;
         }
         //Actualizamos los valores del prueba:
-        pruebaDB.setFecregistro(prueba.getFecregistro());
-        pruebaDB.setDescripcion(prueba.getDescripcion());
-        pruebaDB.setEstado(prueba.getEstado());
-        pruebaDB.setTipo(prueba.getTipo());
+        pruebaDB.setIdtipoprueba(prueba.getIdtipoprueba());
+        pruebaDB.setIdpaciente(prueba.getIdpaciente());
+        pruebaDB.setFecprueba(prueba.getFecprueba());
+        pruebaDB.setFecresultado(prueba.getFecresultado());
+        pruebaDB.setResultado(prueba.getResultado());
+        pruebaDB.setObservacion(prueba.getObservacion());
         return pruebaRepository.save(prueba);
     }
 
@@ -57,15 +59,4 @@ public class PruebaServiceImpl implements PruebaService {
         }
         return "ELIMINADO CON EXITO";
     }
-/*
-    @Override
-    public Prueba getByDni(Long dni) {
-        return pruebaRepository.findAllByTipoAndEstado("DNI", dni.toString());
-    }
-
-    @Override
-    public Prueba getByDocExtranjeria(Long estado) {
-        return pruebaRepository.findAllByTipoAndEstado("DOCUMENTO EXTRANJERIA", estado.toString());
-    }
- */
 }
