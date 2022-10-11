@@ -1,6 +1,8 @@
 package com.example.backpruebas.service.impl;
 
 import com.example.backpruebas.entity.TipoPrueba;
+import com.example.backpruebas.repository.CategoriaPruebaRepository;
+import com.example.backpruebas.repository.MedidaRepository;
 import com.example.backpruebas.repository.TipoPruebaRepository;
 import com.example.backpruebas.service.TipoPruebaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,12 @@ public class TipoPruebaServiceImpl implements TipoPruebaService {
     @Autowired
     private TipoPruebaRepository tipoPruebaRepository;
 
+    @Autowired
+    private MedidaRepository medidaRepository;
+
+    @Autowired
+    private CategoriaPruebaRepository categoriaPruebaRepository;
+
     @Override
     public List<TipoPrueba> findTipoPruebaAll() {
         return (List<TipoPrueba>) tipoPruebaRepository.findAll();
@@ -21,17 +29,30 @@ public class TipoPruebaServiceImpl implements TipoPruebaService {
 
     @Override
     public TipoPrueba getTipoPrueba(UUID id) {
-        return tipoPruebaRepository.findById(id).orElse(null);
+        TipoPrueba tipoPrueba = tipoPruebaRepository.findById(id).orElse(null);
+
+        if(tipoPrueba != null){
+            tipoPrueba.setMedida(medidaRepository.findById(tipoPrueba.getIdmedida()).orElse(null));
+            tipoPrueba.setCategoriaPrueba(categoriaPruebaRepository.findById(tipoPrueba.getIdcategoriaprueba()).orElse(null));
+        }
+
+        return tipoPrueba;
+
     }
 
     @Override
     public TipoPrueba createTipoPrueba(TipoPrueba tipoPrueba) {
         //Aquí irian las validaciones al crear el tipoPrueba de ser necesario
+
+        tipoPrueba.setIdmedida(medidaRepository.save(tipoPrueba.getMedida()).getId());
+        tipoPrueba.setIdcategoriaprueba(categoriaPruebaRepository.save(tipoPrueba.getCategoriaPrueba()).getId());
+
         return tipoPruebaRepository.save(tipoPrueba);
     }
 
     @Override
     public TipoPrueba updateTipoPrueba(TipoPrueba tipoPrueba) {
+
         TipoPrueba tipoPruebaDB = this.getTipoPrueba(tipoPrueba.getId());
         if (tipoPruebaDB == null) {
             return null;
@@ -43,6 +64,7 @@ public class TipoPruebaServiceImpl implements TipoPruebaService {
         //tipoPruebaDB.setEstado(tipoPrueba.getEstado());
         //tipoPruebaDB.setTipo(tipoPrueba.getTipo());
         return tipoPruebaRepository.save(tipoPrueba);
+
     }
 
     @Override

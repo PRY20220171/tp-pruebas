@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -39,18 +40,20 @@ public class TipoPrueba  implements Serializable {
     private UUID id;
 
     @ApiModelProperty(value="El ID de la unidad de medida", dataType="uuid", position=2)
-    @NotEmpty(message = "El ID de la unidad no puede ser vacio")
     @NotNull(message = "El ID de la unidad no puede ser nulo")
     @Column("idmedida")
     @CassandraType(type = CassandraType.Name.UUID)
     private UUID idmedida;
+    @Transient
+    private Medida medida;
 
     @ApiModelProperty(value="Es el ID de la categoria de la prueba", dataType="uuid", position=3)
-    @NotEmpty(message = "La ID de la categoria no puede ser vacio")
     @NotNull(message = "La ID de la categoria no puede ser nulo")
     @Column("idcategoriaprueba")
     @CassandraType(type = CassandraType.Name.UUID)
     private UUID idcategoriaprueba;
+    @Transient
+    private CategoriaPrueba categoriaPrueba;
 
     @ApiModelProperty(value="El nombre de la prueba medica", dataType="ascii", position=4)
     @NotEmpty(message = "El nombre no puede ser vacio")

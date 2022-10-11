@@ -1,7 +1,9 @@
 package com.example.backpruebas.service.impl;
 
 import com.example.backpruebas.entity.Prueba;
+import com.example.backpruebas.entity.TipoPrueba;
 import com.example.backpruebas.repository.PruebaRepository;
+import com.example.backpruebas.repository.TipoPruebaRepository;
 import com.example.backpruebas.service.PruebaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class PruebaServiceImpl implements PruebaService {
     @Autowired
     private PruebaRepository pruebaRepository;
 
+    @Autowired
+    private TipoPruebaRepository tipoPruebaRepository;
+
     @Override
     public List<Prueba> findPruebaAll() {
         return (List<Prueba>) pruebaRepository.findAll();
@@ -21,13 +26,24 @@ public class PruebaServiceImpl implements PruebaService {
 
     @Override
     public Prueba getPrueba(UUID id) {
-        return pruebaRepository.findById(id).orElse(null);
+        Prueba prueba = pruebaRepository.findById(id).orElse(null);
+
+        if(prueba != null){
+            prueba.setTipoPrueba(tipoPruebaRepository.findById(prueba.getIdtipoprueba()).orElse(null));
+        }
+
+        return prueba;
+
     }
 
     @Override
     public Prueba createPrueba(Prueba prueba) {
         //Aquí irian las validaciones al crear el prueba de ser necesario
+
+        prueba.setIdtipoprueba(tipoPruebaRepository.save(prueba.getTipoPrueba()).getId());
+
         return pruebaRepository.save(prueba);
+
     }
 
     @Override
