@@ -1,4 +1,5 @@
 package com.example.backpruebas.entity;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,9 +29,9 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Table
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Medida.class)
-public class Medida  implements Serializable {
+public class Medida implements Serializable {
 
-    @ApiModelProperty(value="Es el ID de la unidad de medida", dataType="uuid", position=1)
+    @ApiModelProperty(value = "Es el ID de la unidad de medida", dataType = "uuid", position = 1)
     @Id
     @Column("idmedida")
     @CassandraType(type = CassandraType.Name.UUID)
@@ -38,14 +39,14 @@ public class Medida  implements Serializable {
     @PrimaryKey
     private UUID id;
 
-    @ApiModelProperty(value="Es el nombre de la unidad de medida", dataType="ascii", position=2)
+    @ApiModelProperty(value = "Es el nombre de la unidad de medida", dataType = "ascii", position = 2)
     @NotEmpty(message = "El nombre no puede ser vacio")
     @NotNull(message = "El nombre no puede ser nulo")
     @Column("nombre")
     @CassandraType(type = CassandraType.Name.ASCII)
     private String nombre;
 
-    @ApiModelProperty(value="Es la descripcion de la unidad de medida", dataType="text", position=3)
+    @ApiModelProperty(value = "Es la descripcion de la unidad de medida", dataType = "text", position = 3)
     @NotEmpty(message = "La descripcion no puede ser vacio")
     @NotNull(message = "La descripcion no puede ser nulo")
     @Column("descripcion")

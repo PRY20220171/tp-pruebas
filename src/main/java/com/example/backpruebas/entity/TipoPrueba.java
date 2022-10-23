@@ -1,4 +1,5 @@
 package com.example.backpruebas.entity;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -29,9 +30,9 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Table
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = TipoPrueba.class)
-public class TipoPrueba  implements Serializable {
+public class TipoPrueba implements Serializable {
 
-    @ApiModelProperty(value="ID del tipo de prueba medica", dataType="uuid", position=1)
+    @ApiModelProperty(value = "ID del tipo de prueba medica", dataType = "uuid", position = 1)
     @Id
     @Column("idtipoprueba")
     @CassandraType(type = CassandraType.Name.UUID)
@@ -39,7 +40,7 @@ public class TipoPrueba  implements Serializable {
     @PrimaryKey
     private UUID id;
 
-    @ApiModelProperty(value="El ID de la unidad de medida", dataType="uuid", position=2)
+    @ApiModelProperty(value = "El ID de la unidad de medida", dataType = "uuid", position = 2)
     @NotNull(message = "El ID de la unidad no puede ser nulo")
     @Column("idmedida")
     @CassandraType(type = CassandraType.Name.UUID)
@@ -47,7 +48,7 @@ public class TipoPrueba  implements Serializable {
     @Transient
     private Medida medida;
 
-    @ApiModelProperty(value="Es el ID de la categoria de la prueba", dataType="uuid", position=3)
+    @ApiModelProperty(value = "Es el ID de la categoria de la prueba", dataType = "uuid", position = 3)
     @NotNull(message = "La ID de la categoria no puede ser nulo")
     @Column("idcategoriaprueba")
     @CassandraType(type = CassandraType.Name.UUID)
@@ -55,14 +56,14 @@ public class TipoPrueba  implements Serializable {
     @Transient
     private CategoriaPrueba categoriaPrueba;
 
-    @ApiModelProperty(value="El nombre de la prueba medica", dataType="ascii", position=4)
+    @ApiModelProperty(value = "El nombre de la prueba medica", dataType = "ascii", position = 4)
     @NotEmpty(message = "El nombre no puede ser vacio")
     @NotNull(message = "El nombre no puede ser nulo")
-    @Column( "nombre")
+    @Column("nombre")
     @CassandraType(type = CassandraType.Name.ASCII)
     private String nombre;
 
-    @ApiModelProperty(value="La descripcion de la prueba medica", dataType="text", position=5)
+    @ApiModelProperty(value = "La descripcion de la prueba medica", dataType = "text", position = 5)
     @NotEmpty(message = "La descripcion no puede ser vacio")
     @NotNull(message = "La descripcion no puede ser nulo")
     @Column("descripcion")
