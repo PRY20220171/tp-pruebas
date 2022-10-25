@@ -1,10 +1,14 @@
 package com.example.backpruebas.service.impl;
 
+import com.example.backpruebas.entity.Paciente;
 import com.example.backpruebas.entity.Prueba;
 import com.example.backpruebas.entity.TipoPrueba;
 import com.example.backpruebas.repository.PruebaRepository;
 import com.example.backpruebas.repository.TipoPruebaRepository;
 import com.example.backpruebas.service.PruebaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,9 @@ public class PruebaServiceImpl implements PruebaService {
     private PruebaRepository pruebaRepository;
 
     @Autowired
+    private ProducerServiceImpl producerService;
+
+    @Autowired
     private TipoPruebaRepository tipoPruebaRepository;
 
     @Override
@@ -26,13 +33,34 @@ public class PruebaServiceImpl implements PruebaService {
 
     @Override
     public Prueba getPrueba(UUID id) {
-        Prueba prueba = pruebaRepository.findById(id).orElse(null);
+        Prueba pruebaDB = pruebaRepository.findById(id).orElse(null);
 
-        if(prueba != null){
-            prueba.setTipoPrueba(tipoPruebaRepository.findById(prueba.getIdtipoprueba()).orElse(null));
+        if (pruebaDB == null){
+            return null;
         }
 
-        return prueba;
+        pruebaDB.setTipoPrueba(tipoPruebaRepository.findById(pruebaDB.getIdtipoprueba()).orElse(null));
+
+        String pacienteDB = producerService.sendMsg(pruebaDB.getIdpaciente().toString());
+
+        if (pacienteDB == null){
+            return null;
+        }
+
+        System.out.println(pacienteDB);
+
+        try {
+            ObjectMapper mapper = JsonMapper.builder()
+                    .addModule(new JavaTimeModule())
+                    .build();
+            Paciente paciente = mapper.readValue(pacienteDB, Paciente.class);
+            pruebaDB.setPaciente(paciente);
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
+
+        return pruebaDB;
 
     }
 
@@ -68,9 +96,9 @@ public class PruebaServiceImpl implements PruebaService {
         if (pruebaDB == null) {
             return null;
         }
-        try{
+        try {
             pruebaRepository.delete(pruebaDB);
-        }catch (Exception e){
+        } catch (Exception e) {
             return "ERROR INTERNO";
         }
         return "ELIMINADO CON EXITO";

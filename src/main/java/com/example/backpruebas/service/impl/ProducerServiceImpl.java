@@ -23,18 +23,20 @@ public class ProducerServiceImpl implements ProducerService {
     @Value("${spring.rabbitmq.routingkey}")
     private String routingkey;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    public Object sendMsg(String idObj) {
+    public String sendMsg(String idObj) {
         try{
             Object response = amqpTemplate.convertSendAndReceive(exchange.getName(), routingkey, idObj);
             if(response!=null){
-                return objectMapper.readValue(response.toString(), Prueba.class);
+                //return objectMapper.readValue(response.toString(), Prueba.class);
+                return response.toString();
             }
             else{
                 return null;
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
             return null;
         }
     }

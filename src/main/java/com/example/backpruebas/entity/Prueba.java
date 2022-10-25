@@ -54,6 +54,8 @@ public class Prueba implements Serializable {
     @Column("idpaciente")
     @CassandraType(type = CassandraType.Name.UUID)
     private UUID idpaciente;
+    @Transient
+    private Paciente paciente;
 
     @ApiModelProperty(value = "Es la fecha en la que se obtiene el resultado de la prueba", dataType = "date", position = 4)
     @NotNull(message = "La fecha de resultado no puede ser nula")
@@ -79,5 +81,11 @@ public class Prueba implements Serializable {
     @Column("observacion")
     @CassandraType(type = CassandraType.Name.TEXT)
     private String observacion;
+
+    @ApiModelProperty(value = "Es el ID de los signos vitales", dataType = "uuid", position = 8)
+    @NotNull(message = "El ID de los signos vitales no puede ser nulo")
+    @Column("signosvitales")
+    @CassandraType(type = CassandraType.Name.UUID)
+    private UUID signosvitales;
 
 }

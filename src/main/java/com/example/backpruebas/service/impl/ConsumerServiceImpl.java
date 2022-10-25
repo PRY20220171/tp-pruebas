@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class ConsumerServiceImpl implements ConsumerService {
-    @Autowired
+public class ConsumerServiceImpl{
+    /*@Autowired
     private PruebaService pruebaService;
 
     @Override
@@ -55,5 +55,5 @@ public class ConsumerServiceImpl implements ConsumerService {
                 return null;
             }
         }
-    }
+    }*/
 }
